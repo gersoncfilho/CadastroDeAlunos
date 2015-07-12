@@ -1,6 +1,7 @@
 package gersoncfilho.udacity.com.cadastrodealunos;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ public class ListaAlunosActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Toast.makeText(getApplicationContext(), "Posição: " + position, Toast.LENGTH_SHORT).show();
-                ;
             }
 
         });
@@ -49,14 +49,17 @@ public class ListaAlunosActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        // as you specify a parent activity in AndroidManifest.xml.``
+        switch (item.getItemId()) {
+            case R.id.menu_novo:
+                Intent intent = new Intent(this,FormularioActivity.class);
+                startActivity(intent);
+                return false;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

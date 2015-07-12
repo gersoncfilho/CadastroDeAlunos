@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cadastro de Alunos</string>
+    <string name="app_name">Agenda</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -15,4 +15,5 @@
     <string name="enviar_alunos">Sincronizar</string>
     <string name="baixar_provas">Baixar Provas</string>
     <string name="preferencias">Preferências</string>
+    <string name="mais_opcoes">Mais opções</string>
 </resources>
