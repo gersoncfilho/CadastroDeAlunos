@@ -25,7 +25,12 @@ public class FormularioActivity extends Activity {
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Aluno aluno = helper.pegaAlunoDoFormulario();
+                AlunoDAO alunoDAO = new AlunoDAO(FormularioActivity.this);
+                alunoDAO.insere(aluno);
+                alunoDAO.close();
 
+                finish();
             }
         });
 
