@@ -11,29 +11,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class ListaAlunosActivity extends Activity {
 
     private ListView listaAlunos;
+    private List<Aluno> alunos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listagem_alunos);
 
-        String[] alunos = {"Anderson","Filipe","Guilherme","Gerson"};
+        AlunoDAO dao = new AlunoDAO(this);
+        alunos = dao.getLista();
+        dao.close();
+
         int layout = android.R.layout.simple_list_item_1;
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, layout,alunos);
-        listaAlunos = (ListView)findViewById(R.id.lista_alunos);
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, layout, alunos);
+        listaAlunos = (ListView) findViewById(R.id.lista_alunos);
         listaAlunos.setAdapter(adapter);
-
-        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getApplicationContext(), "Posição: " + position, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
 
 
     }

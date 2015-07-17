@@ -2,6 +2,7 @@ package gersoncfilho.udacity.com.cadastrodealunos;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,6 +10,8 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Gerson on 7/13/2015.
@@ -48,6 +51,30 @@ public class AlunoDAO extends SQLiteOpenHelper {
         values.put("nota", aluno.getNota());
 
         getWritableDatabase().insert(TABELA, null, values);
+    }
+
+    public List<Aluno> getLista(){
+        List<Aluno> alunos =  new ArrayList<Aluno>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABELA + ";",null);
+
+        while (cursor.moveToNext()){
+            Aluno aluno = new Aluno();
+
+            aluno.setId(cursor.getLong(cursor.getColumnIndex("id")));
+            aluno.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+            aluno.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
+            aluno.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+            aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
+            aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
+            aluno.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("caminhoFoto")));
+
+            alunos.add(aluno);
+        }
+
+        cursor.close();
+
+        return alunos;
     }
 
 }

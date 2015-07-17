@@ -14,6 +14,8 @@ public class Aluno {
 
 
     //Getters
+    public Long getId() {return id;}
+
     public String getNome(){
         return nome;
     }
@@ -40,6 +42,10 @@ public class Aluno {
 
 
     //Setters
+    public void setId(long id){
+        this.id = this.id;
+    }
+
     public void setNome(String nome){
         this.nome = nome;
     }
