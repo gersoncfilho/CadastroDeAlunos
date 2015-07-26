@@ -3,6 +3,7 @@ package gersoncfilho.udacity.com.cadastrodealunos;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,7 @@ public class ListaAlunosActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listagem_alunos);
 
-        String[] alunos = {"Anderson","Filipe","Guilherme","Gerson"};
+        final String[] alunos = {"Anderson","Filipe","Guilherme","Gerson"};
         int layout = android.R.layout.simple_list_item_1;
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, layout,alunos);
         listaAlunos = (ListView)findViewById(R.id.lista_alunos);
@@ -29,9 +30,17 @@ public class ListaAlunosActivity extends Activity {
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getApplicationContext(), "Posição: " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Posição: " + position + " Id: " + id, Toast.LENGTH_SHORT).show();
             }
 
+        });
+
+        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                return false;
+            }
         });
 
 
@@ -61,5 +70,59 @@ public class ListaAlunosActivity extends Activity {
 
 
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuItem ligar = menu.add("Ligar");
+        MenuItem enviarSMS = menu.add("Enviar SMS");
+        MenuItem acharMapa = menu.add("Achar no Mapa");
+        MenuItem navegarSite = menu.add("Navegar no Site");
+        MenuItem deletar = menu.add("Deletar");
+        MenuItem enviarEmail = menu.add("Enviar Email");
+
+        ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        enviarSMS.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        acharMapa.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        navegarSite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        enviarEmail.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
     }
 }
