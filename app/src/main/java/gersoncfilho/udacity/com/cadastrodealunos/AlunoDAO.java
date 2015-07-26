@@ -53,6 +53,12 @@ public class AlunoDAO extends SQLiteOpenHelper {
         getWritableDatabase().insert(TABELA, null, values);
     }
 
+    //Método deletar aluno no banco de dados
+    public void deletar(Aluno aluno){
+        String args[] = {aluno.getId().toString()};
+        getWritableDatabase().delete(TABELA, "id=?", args);
+    }
+
     public List<Aluno> getLista(){
         List<Aluno> alunos =  new ArrayList<Aluno>();
         SQLiteDatabase database = getReadableDatabase();
@@ -76,5 +82,7 @@ public class AlunoDAO extends SQLiteOpenHelper {
 
         return alunos;
     }
+
+
 
 }
