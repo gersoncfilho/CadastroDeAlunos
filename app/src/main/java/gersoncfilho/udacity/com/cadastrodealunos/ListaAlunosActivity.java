@@ -2,6 +2,8 @@ package gersoncfilho.udacity.com.cadastrodealunos;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -19,6 +21,8 @@ public class ListaAlunosActivity extends Activity {
 
     private ListView listaAlunos;
     private List<Aluno> alunos;
+    private Aluno alunoSelecionado;
+
 
     public void carregaLista(){
         AlunoDAO dao = new AlunoDAO(this);
@@ -27,6 +31,8 @@ public class ListaAlunosActivity extends Activity {
         ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_expandable_list_item_1, alunos);
         this.listaAlunos.setAdapter(adapter);
     }
+
+
 
 
     @Override
@@ -43,6 +49,18 @@ public class ListaAlunosActivity extends Activity {
 
         //cria menu de contexto para a lista de alunos
         registerForContextMenu(listaAlunos);
+
+        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                alunoSelecionado = (Aluno)  adapterView.getItemAtPosition(i);
+
+
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -77,15 +95,72 @@ public class ListaAlunosActivity extends Activity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Ligar");
-        menu.add("Enviar SMS");
-        menu.add("Achar no mapa");
-        menu.add("Navegar no site");
-        menu.add("Deletar");
-        menu.add("Enviar email");
+        MenuItem ligar = menu.add("Ligar");
+        ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                return false;
+            }
+        });
+
+        MenuItem enviarSms = menu.add("Enviar SMS");
+        enviarSms.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        MenuItem acharMapa =  menu.add("Achar no mapa");
+        acharMapa.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        MenuItem navegar = menu.add("Navegar no site");
+        navegar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+        final MenuItem deletar = menu.add("Deletar");
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                new AlertDialog.Builder(ListaAlunosActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Deletar")
+                        .setMessage("Deseja mesmo deletar?")
+                        .setPositiveButton("Quero",
+                                new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int which){
+                                        AlunoDAO dao= new AlunoDAO(ListaAlunosActivity.this);
+                                        dao.deletar(alunoSelecionado);
+                                        dao.close();
+                                        carregaLista();
+                                    }
+
+                                }).setNegativeButton("Não", null).show();
+                return false;
+            }
+        });
+
+        MenuItem enviarErmail = menu.add("Enviar email");
+        enviarErmail.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
     }
 
-    MenuItem ligar = menu.add()
+
 }
